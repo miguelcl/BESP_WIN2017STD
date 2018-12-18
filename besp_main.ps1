@@ -11,7 +11,7 @@
 ##      - DHCP Enable on prefered network (Service Interface)
 ##
 ##  Autor: SQUAD BESP XXXXX
-##  DEV: Miguel Angel Amador Lorca <miguelcl@devnet.cl> 
+##  DEV: Miguel Angel Amador Lorca <miguelcl at devnet.cl> 
 ##                                 github: @miguelcl
 ##       
 ##
@@ -32,6 +32,8 @@ $vSW = "C:\besp\sw.pid"           #Archivo para llevar el control de reinicios/b
 $vTmpVars = "C:\besp\vars.ini"    #Archivo de paso para variables entre Reinicios 
 $DNSSERVER="10.108.1.1"           # IP del servidor DNS
 $vRestartCount = 0                # Numero de Reinicios 
+$vURI = "www-uri-resource" #URI de Recursos para Configuracion
+
 
 if(!(Test-Path $vSW -PathType Leaf)){
     SetswitchCase -NumberOfRestart $vRestartCount 
@@ -186,7 +188,7 @@ Write-Host "####################################################################
 
 #Invoke-WebRequest -Uri http://besp.falabella.com/repo/site.dat  -Method Get -UserAgent BespAgent  | Select-String -Pattern $vNetLan_GW
 
-$vStrTMP = Invoke-WebRequest -Uri http://besp.falabella.com/repo/win2016std -UserAgent "BESPScriptAgent" -Method Get| Select-String -Pattern "fqdn"
+$vStrTMP = Invoke-WebRequest -Uri $vURI -UserAgent "BESPScriptAgent" -Method Get| Select-String -Pattern "fqdn"
 $ServerNameNew = $vStrTMP.ToString().Substring(7,9)
 $ServerNameOld = $env:COMPUTERNAME
 
